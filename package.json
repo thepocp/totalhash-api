@@ -1,0 +1,19 @@
+{
+  "name": "totalhash-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "totalhash"
+  ],
+  "author": "Mikhail Novikov",
+  "license": "MIT",
+  "dependencies": {
+    "request": "2.88.0",
+    "request-promise-native": "1.0.7",
+    "xml2json": "^0.11.2"
+  }
+}
