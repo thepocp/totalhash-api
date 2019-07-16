@@ -3,17 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thepocp/totalhash-api.git"
   },
   "keywords": [
     "totalhash"
   ],
   "author": "Mikhail Novikov",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thepocp/totalhash-api/issues"
+  },
+  "homepage": "https://github.com/thepocp/totalhash-api#readme",
   "dependencies": {
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
-    "xml2json": "^0.11.2"
+    "xml2json": "0.11.2"
   }
 }
