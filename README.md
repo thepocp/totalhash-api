@@ -11,7 +11,7 @@ npm i totalhash-api
 ## Example
 
 ```javascript
-const totalhash = require('totalhash-api');
+const { totalhash } = require('totalhash-api');
 
 const api = totalhash('id', 'api key');
 

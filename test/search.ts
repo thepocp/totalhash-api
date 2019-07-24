@@ -1,7 +1,7 @@
 jest.mock('request-promise-native');
 
 import * as request from 'request-promise-native';
-import totalhash from '../src/index';
+import { totalhash } from '../src/index';
 
 describe('api.search()', () => {
   it('Works correctly with one found hash', async () => {

@@ -6,7 +6,7 @@ import {
   performUsageRequest,
 } from './requests';
 
-const totalhash = (
+export const totalhash = (
   id: string,
   apiKey: string,
   opts?: request.RequestPromiseOptions,
@@ -28,5 +28,3 @@ const totalhash = (
     return performUsageRequest(options);
   },
 });
-
-export default totalhash;
