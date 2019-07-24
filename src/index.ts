@@ -25,7 +25,7 @@ const totalhash = (
 
   usage: () => {
     const options = { id, apiKey, opts };
-    performUsageRequest(options);
+    return performUsageRequest(options);
   },
 });
 
