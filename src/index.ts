@@ -11,11 +11,12 @@ export const totalhash = (
   apiKey: string,
   opts?: request.RequestPromiseOptions,
 ) => ({
-  analysis: async (ioc: string): Promise<object> => {
+  analysis: async (ioc: string) => {
     const options = { id, apiKey, opts };
     const data = await performAnalysisRequest(options, ioc);
     try {
-      return parseAnalysisResult(data) as object;
+      const parsed = await parseAnalysisResult(data);
+      return parsed as object;
     } catch {
       throw new Error(data);
     }
@@ -25,7 +26,8 @@ export const totalhash = (
     const options = { id, apiKey, opts };
     const data = await performSearchRequest(options, message, offset);
     try {
-      return parseSearchResult(data);
+      const parsed = await parseSearchResult(data);
+      return parsed;
     } catch {
       throw new Error(data);
     }
