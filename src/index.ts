@@ -14,13 +14,21 @@ export const totalhash = (
   analysis: async (ioc: string): Promise<object> => {
     const options = { id, apiKey, opts };
     const data = await performAnalysisRequest(options, ioc);
-    return parseAnalysisResult(data) as object;
+    try {
+      return parseAnalysisResult(data) as object;
+    } catch {
+      throw new Error(data);
+    }
   },
 
   search: async (message: string, offset?: number) => {
     const options = { id, apiKey, opts };
     const data = await performSearchRequest(options, message, offset);
-    return parseSearchResult(data);
+    try {
+      return parseSearchResult(data);
+    } catch {
+      throw new Error(data);
+    }
   },
 
   usage: () => {

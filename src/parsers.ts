@@ -136,11 +136,6 @@ interface AnalysisResult {
   };
 }
 
-const LIMITS_EXCEEDED_MESSAGE =
-  'Sorry API limit reached please contact totalhash.com@gmail.com';
-
-const checkLimits = (data: string) => data.startsWith(LIMITS_EXCEEDED_MESSAGE);
-
 const convertToObj = async <T extends {}>(data: string): Promise<T> => {
   return new Promise((resolve, reject) =>
     parseString(
@@ -171,11 +166,6 @@ const formatDoc = (doc?: DocItem | DocItem[]) => {
 };
 
 const parseSearchResult = async (data: string) => {
-  const limitsExceeded = checkLimits(data);
-  if (limitsExceeded) {
-    throw new Error(LIMITS_EXCEEDED_MESSAGE);
-  }
-
   const parsed = await convertToObj<SearchResult>(data);
 
   const { numFound, start, doc } = parsed.response.result;
@@ -185,11 +175,6 @@ const parseSearchResult = async (data: string) => {
 const parseAnalysisResult = async (data?: string) => {
   if (!data) {
     return null;
-  }
-
-  const limitsExceeded = checkLimits(data);
-  if (limitsExceeded) {
-    throw new Error(LIMITS_EXCEEDED_MESSAGE);
   }
 
   const parsed = await convertToObj<AnalysisResult>(data);
