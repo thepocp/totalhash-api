@@ -22,7 +22,9 @@ const performSearchRequest = (
 ): request.RequestPromise<string> => {
   const { apiKey, id, opts } = options;
   const sign = hmac(apiKey, message);
-  const url = `${API_URL}/search/${message}&id=${id}&sign=${sign}${
+  const encodedMessage = encodeURI(message);
+
+  const url = `${API_URL}/search/${encodedMessage}&id=${id}&sign=${sign}${
     offset ? `&start=${offset}` : ''
   }`;
 
