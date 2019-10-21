@@ -33,8 +33,10 @@ export const totalhash = (
     }
   },
 
-  usage: () => {
+  usage: async () => {
     const options = { id, apiKey, opts };
-    return performUsageRequest(options);
+    const data = await performUsageRequest(options);
+
+    return data;
   },
 });
