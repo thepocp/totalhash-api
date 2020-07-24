@@ -1,10 +1,11 @@
 import * as crypto from 'crypto';
-import * as request from 'request-promise-native';
+import * as Fetch from 'node-fetch';
+import fetch from 'node-fetch';
 
 interface Options {
   id: string;
   apiKey: string;
-  opts?: request.RequestPromiseOptions;
+  opts?: Fetch.Request;
 }
 
 const hmac = (key: string, data: string) =>
@@ -15,11 +16,23 @@ const hmac = (key: string, data: string) =>
 
 const API_URL = 'https://api.totalhash.com';
 
+const requestAsString = async (
+  url: string,
+  options?: Fetch.Request,
+): Promise<string> => {
+  const result = await fetch(url, options);
+  if (!result.ok) {
+    throw new Error(result.statusText);
+  }
+
+  return await result.text();
+};
+
 const performSearchRequest = (
   options: Options,
   message: string,
   offset?: number,
-): request.RequestPromise<string> => {
+): Promise<string> => {
   const { apiKey, id, opts } = options;
   const sign = hmac(apiKey, message);
   const encodedMessage = encodeURI(message);
@@ -28,28 +41,26 @@ const performSearchRequest = (
     offset ? `&start=${offset}` : ''
   }`;
 
-  return request(url, opts);
+  return requestAsString(url, opts);
 };
 
 const performAnalysisRequest = (
   options: Options,
   ioc: string,
-): request.RequestPromise<string> => {
+): Promise<string> => {
   const { apiKey, id, opts } = options;
   const sign = hmac(apiKey, ioc);
   const url = `${API_URL}/analysis/${ioc}&id=${id}&sign=${sign}`;
 
-  return request(url, opts);
+  return requestAsString(url, opts);
 };
 
-const performUsageRequest = (
-  options: Options,
-): request.RequestPromise<string> => {
+const performUsageRequest = (options: Options): Promise<string> => {
   const { apiKey, id, opts } = options;
   const sign = hmac(apiKey, 'usage');
   const url = `${API_URL}/usage/id=${id}&sign=${sign}`;
 
-  return request(url, opts);
+  return requestAsString(url, opts);
 };
 
 export { performSearchRequest, performAnalysisRequest, performUsageRequest };

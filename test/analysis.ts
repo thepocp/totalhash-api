@@ -1,12 +1,15 @@
-jest.mock('request-promise-native');
+jest.mock('node-fetch');
 
-import * as request from 'request-promise-native';
+import fetch from 'node-fetch';
 import { totalhash } from '../src/index';
 
 describe('api.search()', () => {
   it('Works correctly with one found hash', async () => {
-    (request as any).mockReturnValue(
-      Promise.resolve(`
+    (fetch as any).mockReturnValue(
+      Promise.resolve({
+        ok: true,
+        text: () =>
+          Promise.resolve(`
       <?xml version="1.0"?>
       <!-- Totalhash sandbox copyright (c) 2013 -->
       <analysis version="0.3" sha1="42493f2b568826215a85529a238dfdddf57a6868" md5="4a70999f7a8fe02a508367d95251504b" time="2013-12-18 20:11:39">
@@ -100,6 +103,7 @@ describe('api.search()', () => {
         <network_pcap sha1="de67c18d7c767c1ba3b48caa6f3047e1b1749c1a" md5="40ce6b88f06ae04aeee72b961bd6844c"/>
       </analysis>        
       `),
+      }),
     );
 
     const api = totalhash('id', 'api_key');
@@ -107,7 +111,7 @@ describe('api.search()', () => {
       '42493f2b568826215a85529a238dfdddf57a6868',
     );
 
-    expect(request).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(result).toEqual({
       version: '0.3',
       sha1: '42493f2b568826215a85529a238dfdddf57a6868',
