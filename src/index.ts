@@ -1,4 +1,4 @@
-import * as request from 'request-promise-native';
+import * as fetch from 'node-fetch';
 import { parseAnalysisResult, parseSearchResult } from './parsers';
 import {
   performAnalysisRequest,
@@ -9,7 +9,7 @@ import {
 export const totalhash = (
   id: string,
   apiKey: string,
-  opts?: request.RequestPromiseOptions,
+  opts?: fetch.Request,
 ) => ({
   analysis: async (ioc: string) => {
     const options = { id, apiKey, opts };

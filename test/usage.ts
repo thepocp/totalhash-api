@@ -1,16 +1,21 @@
-jest.mock('request-promise-native');
+jest.mock('node-fetch');
 
-import * as request from 'request-promise-native';
+import fetch from 'node-fetch';
 import { totalhash } from '../src/index';
 
 describe('api.usage()', () => {
   it('Gets response from the api', async () => {
-    (request as any).mockReturnValue(Promise.resolve('4 of 300'));
+    (fetch as any).mockReturnValue(
+      Promise.resolve({
+        ok: true,
+        text: () => Promise.resolve('4 of 300'),
+      }),
+    );
 
     const api = totalhash('id', 'api_key');
     const result = await api.usage();
 
-    expect(request).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(result).toBe('4 of 300');
   });
 });
